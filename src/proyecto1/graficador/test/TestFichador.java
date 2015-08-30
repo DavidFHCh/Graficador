@@ -11,17 +11,19 @@ import java.util.*;
  */
 public class TestFichador{
 
-	private Fichador as; 
+	private Fichador as, as1; 
 
 	/**
 	* Crea un objeto de tipo Fichador para las pruebas.
 	*/
 	public TestFichador(){
 		as = new Fichador("52*x^2+8*(x+10)");
+		as1 = new Fichador("p?");
 	}
 
+
 	@Test public void testhazFichas(){
-		LinkedList<String> l1, l2;
+		LinkedList<String> l1, l2, l3;
 		l1 = new LinkedList<String>(); // Lista con la que compararemos.
 		l2 = new LinkedList<String>();
 		l1.add("52");
@@ -37,6 +39,10 @@ public class TestFichador{
 		l1.add("+");
 		l1.add("10");
 		l1.add(")");
+		try{
+			l3 = as1.hazFichas();
+			Assert.fail();
+		}catch(ExcepcionCadenaInvalida eci){}
 		try{
 			l2 = as.hazFichas();
 		} catch(ExcepcionCadenaInvalida eci){
