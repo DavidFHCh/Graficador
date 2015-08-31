@@ -28,25 +28,44 @@ public class Fichador{
 		char[] c = this.s.toCharArray();
 		LinkedList<String> l = new LinkedList<String>();
 		int j;
-		String num;
-		String regex = "^[0-9]";
+		String union, s1, s2;
+		String regexnum = "^[0-9]";
+		String regexlet = "^[a-zA-Z]";
 		for(int i = 0;i < c.length; i++){
-			num = ""; // tenemos que reiniciar la variable
-			String s1 = String.valueOf(c[i]); 
+			union = ""; // tenemos que reiniciar la variable
+			s1 = String.valueOf(c[i]); 
 			if(c[i] == 'x' || c[i] == 'X'){
 				l.add(s1);
 				continue;
 			}
-			if(s1.matches(regex)){
-				num = s1;
+			if(s1.matches(regexlet)){
+				union = s1;
 				j = i+1;
-				String s2 = String.valueOf(c[j]);
-				while(s2.matches(regex)){
-					num += s2;
+				s2 = String.valueOf(c[j]);
+				while(s2.matches(regexlet)){
+					union += s2;
 					j++;
+					if(j >= c.length)
+						break;
 					s2 = String.valueOf(c[j]);
 				}
-				l.add(num);
+				l.add(union);
+				i = j-1;
+				continue;
+					
+			}
+			if(s1.matches(regexnum)){
+				union = s1;
+				j = i+1;
+				s2 = String.valueOf(c[j]);
+				while(s2.matches(regexnum)){
+					union += s2;
+					j++;
+					if(j >= c.length)
+						break;
+					s2 = String.valueOf(c[j]);
+				}
+				l.add(union);
 				i = j-1;
 				continue;
 			}

@@ -17,7 +17,7 @@ public class TestFichador{
 	* Crea un objeto de tipo Fichador para las pruebas.
 	*/
 	public TestFichador(){
-		as = new Fichador("52*x^2+8*(x+10)");
+		as = new Fichador("52*x^4+8*(x+10)+sin(x+2)+aksdbkvb");
 		as1 = new Fichador("p?");
 	}
 
@@ -30,7 +30,7 @@ public class TestFichador{
 		l1.add("*");				
 		l1.add("x");
 		l1.add("^");
-		l1.add("2");
+		l1.add("4");
 		l1.add("+");
 		l1.add("8");
 		l1.add("*");
@@ -39,6 +39,13 @@ public class TestFichador{
 		l1.add("+");
 		l1.add("10");
 		l1.add(")");
+		l1.add("+");
+		l1.add("sin");
+		l1.add("(");
+		l1.add("x");
+		l1.add("+");
+		l1.add("2");
+		l1.add(")");		
 		try{
 			l3 = as1.hazFichas();
 			Assert.fail();
