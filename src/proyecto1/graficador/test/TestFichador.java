@@ -17,7 +17,7 @@ public class TestFichador{
 	* Crea un objeto de tipo Fichador para las pruebas.
 	*/
 	public TestFichador(){
-		as = new Fichador("52*x^4+8*(x+10)+sin(x+2)+aksdbkvb");
+		as = new Fichador("52*x^4+8*(x+10)+sin(x+2)");
 		as1 = new Fichador("p?");
 	}
 
