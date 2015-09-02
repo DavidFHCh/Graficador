@@ -1,6 +1,7 @@
 package proyecto1.graficador.test;
 
 import proyecto1.graficador.Fichador;
+import proyecto1.graficador.Ficha;
 import proyecto1.graficador.ExcepcionCadenaInvalida;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,48 +18,55 @@ public class TestFichador{
 	* Crea un objeto de tipo Fichador para las pruebas.
 	*/
 	public TestFichador(){
-		as = new Fichador("52*x^4+8*(x+10)+sin(x+2)");
-		as1 = new Fichador("p?");
+		as = new Fichador();
+		as1 = new Fichador();
 	}
 
 
 	@Test public void testhazFichas(){
-		LinkedList<String> l1, l2, l3;
-		l1 = new LinkedList<String>(); // Lista con la que compararemos.
-		l2 = new LinkedList<String>();
-		l1.add("52");
-		l1.add("*");				
-		l1.add("x");
-		l1.add("^");
-		l1.add("4");
-		l1.add("+");
-		l1.add("8");
-		l1.add("*");
-		l1.add("(");
-		l1.add("x");			
-		l1.add("+");
-		l1.add("10");
-		l1.add(")");
-		l1.add("+");
-		l1.add("sin");
-		l1.add("(");
-		l1.add("x");
-		l1.add("+");
-		l1.add("2");
-		l1.add(")");		
+		LinkedList<Ficha> l1, l2, l3;
+		l1 = new LinkedList<Ficha>(); // Lista con la que compararemos.
+		l2 = null;
+		l3 = null;
+		l1.add(new Ficha(7,"52"));
+		l1.add(new Ficha(5,"*"));				
+		l1.add(new Ficha(8,"x"));
+		l1.add(new Ficha(6,"^"));
+		l1.add(new Ficha(7,"4"));
+		l1.add(new Ficha(4,"+"));
+		l1.add(new Ficha(7,"8"));
+		l1.add(new Ficha(5,"*"));
+		l1.add(new Ficha(2,"("));
+		l1.add(new Ficha(8,"x"));			
+		l1.add(new Ficha(4,"+"));
+		l1.add(new Ficha(7,"10"));
+		l1.add(new Ficha(3,")"));
+		l1.add(new Ficha(4,"+"));
+		l1.add(new Ficha(1,"sin"));
+		l1.add(new Ficha(2,"("));
+		l1.add(new Ficha(8,"x"));
+		l1.add(new Ficha(4,"+"));
+		l1.add(new Ficha(7,"2"));
+		l1.add(new Ficha(3,")"));		
 		try{
-			l3 = as1.hazFichas();
+			as1.hazFichas("p?=%");
+			l3 = as1.getFichas(); 
 			Assert.fail();
 		}catch(ExcepcionCadenaInvalida eci){}
 		try{
-			l2 = as.hazFichas();
+			as.hazFichas("52*x^4+8*(x+10)+sin(x+2)");
+			l2 = as.getFichas();
 		} catch(ExcepcionCadenaInvalida eci){
 			System.err.println(eci);
 			Assert.fail();
 		}	
 		Assert.assertFalse(l2 == null);
-		System.out.println(l1.size() + "  " + l1.toString());
-		System.out.println(l2.size() + "  " + l2.toString());
+		for(Ficha f : l1){
+		System.out.println(l1.size() + "  " + f.entrada);
+		}
+		for(Ficha f : l2){
+		System.out.println(l2.size() + "  " + f.entrada);
+		}	
 		Assert.assertTrue(l1.size() == l2.size());
 		Assert.assertTrue(l1.equals(l2));
 	}

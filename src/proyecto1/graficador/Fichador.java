@@ -1,6 +1,9 @@
 package proyecto1.graficador;
 
 import java.util.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 //import java.lang.String;
 
 /**
@@ -8,78 +11,79 @@ import java.util.*;
  */
 public class Fichador{
 
-	private String s; // La String recibida.
+	private LinkedList<TipoFicha> tiposFichas; // Lista para la gramatica.
+	private LinkedList<Ficha> fichas; // Lista de fichas.
+
 
 	/**
-	* Crea un Fichador.
-	* @param String s - La String que se analizara.
+	* Clase interna privada que nos va a ayudar a separar la cadena recibida
+	* en "tokens"
 	*/
-	public Fichador(String s){
-		this.s = s;
+	private class TipoFicha{
+
+		public final Pattern regex;// Un objeto de tipo pattern.
+		public final int ficha;
+
+		public TipoFicha(Pattern regex, int ficha){
+			this.regex = regex;
+			this.ficha = ficha;
+		}
 	}
 
 	/**
-	* Metodo que crea los "tokens" para despues pasarselos7
-	* al arbol Sintactico.
-	* @param 
-	* @return LinkedList - Una lista con las fichas. 
+	* Constructor que crea una lista con los tipos de fichas que puede haber y la lista de Fichas.
 	*/
-	public LinkedList<String> hazFichas() throws ExcepcionCadenaInvalida{
-		char[] c = this.s.toCharArray();
-		LinkedList<String> l = new LinkedList<String>();
-		int j;
-		String union, s1, s2;
-		String regexnum = "^[0-9]";
-		String regexlet = "^[a-zA-Z]";
-		for(int i = 0;i < c.length; i++){
-			union = ""; // tenemos que reiniciar la variable
-			s1 = String.valueOf(c[i]); 
-			if(c[i] == 'x' || c[i] == 'X'){
-				l.add(s1);
-				continue;
-			}
-			if(s1.matches(regexlet)){
-				union = s1;
-				j = i+1;
-				s2 = String.valueOf(c[j]);
-				while(s2.matches(regexlet)){
-					union += s2;
-					j++;
-					if(j >= c.length)
-						break;
-					s2 = String.valueOf(c[j]);
-				}
-				l.add(union);
-				i = j-1;
-				continue;
-					
-			}
-			if(s1.matches(regexnum)){
-				union = s1;
-				j = i+1;
-				s2 = String.valueOf(c[j]);
-				while(s2.matches(regexnum)){
-					union += s2;
-					j++;
-					if(j >= c.length)
-						break;
-					s2 = String.valueOf(c[j]);
-				}
-				l.add(union);
-				i = j-1;
-				continue;
-			}
-			if(c[i] == '{' || c[i] == '}' ||
-				c[i] == '[' || c[i] == ']' ||
-				c[i] == '(' || c[i] == ')' ||
-				c[i] == '+' || c[i] == '-' ||
-				c[i] == '^' || c[i] == '*'){
-				l.add(s1);
-		}else {
-			throw new ExcepcionCadenaInvalida(s1);
-		}
-		}
-		return l;
+	public Fichador() {
+  		tiposFichas = new LinkedList<TipoFicha>();
+  		fichas = new LinkedList<Ficha>();
+  		agregaGramatica();
 	}
+
+	public LinkedList<Ficha> getFichas(){
+		return this.fichas;
+	}
+
+	/**
+  	 *	Separa la String de entrada en Fichas.
+  	 * @param la String de entrada.
+  	 */ 
+  	public void hazFichas(String entrada){
+  		String entradaCopia = new String(entrada);
+  		fichas.clear();
+  		while(!entradaCopia.equals("")){
+  			boolean encontrado = false;
+  			for(TipoFicha tf : tiposFichas){
+  				Matcher m = tf.regex.matcher(entradaCopia);
+  				if(m.find()){
+  					encontrado = true;
+  					String ficha1 = m.group().trim();
+  					fichas.add(new Ficha(tf.ficha,ficha1));
+  					entradaCopia = m.replaceFirst("");
+  					break; 
+  				}
+  			}
+  			if(!encontrado) 
+  				throw new ExcepcionCadenaInvalida("Caracter no esperado. " + entradaCopia);
+  		}
+  	}
+
+	/**
+	* Agregar la informacion a Lista de tipos de ficha, de acuerdo a nuestra Gramatica.
+	*/
+	private void agrega(String regex, int ficha) {
+		TipoFicha tf = new TipoFicha(Pattern.compile("^("+regex+")"), ficha);
+		tiposFichas.add(tf);
+  	}
+
+  	private void agregaGramatica(){
+  		agrega("sin|cos|tan|cot|sec|csc|sqrt", 1);
+  		agrega("\\(", 2);
+  		agrega("\\)", 3);
+  		agrega("[+-]", 4);
+  		agrega("[*/]", 5);
+  		agrega("\\^", 6);
+  		agrega("[0-9]+", 7);
+  		agrega("^[a-z]", 8);
+  	}
 
 }
