@@ -43,7 +43,7 @@ public class Fichador{
     return this.fichas;
   }
 
-  /**
+    /**
      *  Separa la String de entrada en Fichas.
      * @param la String de entrada.
      */ 

@@ -73,10 +73,6 @@ public class TestFichador{
 			Assert.fail();
 		}	
 		Assert.assertFalse(l2 == null);
-		for(Ficha f : l1){
-		}
-		for(Ficha f : l2){
-		}	
 		Assert.assertTrue(l1.size() == l2.size());
 		Assert.assertTrue(l1.equals(l2));
 	}
