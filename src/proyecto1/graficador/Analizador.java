@@ -8,14 +8,14 @@ import java.util.*;
 */
 public class Analizador{
 
-	private static int LETRA = 8;
-	private static int NUM = 7;	
-	private static int POW = 6;
-	private static int MULT_DIV = 5;
-	private static int SUM_RES = 4;
-	private static int PARE_CER = 3;
-	private static int PARE_AB = 2;
-	private static int FUNC = 1;
+	public static int LETRA = 8;
+	public static int NUM = 7;	
+	public static int POW = 6;
+	public static int MULT_DIV = 5;
+	public static int SUM_RES = 4;
+	public static int PARE_CER = 3;
+	public static int PARE_AB = 2;
+	public static int FUNC = 1;
 
 	private LinkedList<Ficha> salida;
 	private Stack<Ficha> s;
@@ -42,10 +42,9 @@ public class Analizador{
      */
 	public void analizar(LinkedList<Ficha> entrada){
 		this.s = new Stack<Ficha>();
-		for(Ficha f: entrada){
-			if(!this.s.empty() && this.s.peek().ficha == 1 && f.ficha != 2){
-				throw new ExcepcionCadenaInvalida("\'(\' esperado.");
-			}
+		Ficha f = new Ficha();
+		for(int i = 0; i < entrada.size();i++){
+			f = entrada.pop();
 			if(f.ficha == 8 || f.ficha == 7){ // si la ficha es numero o literal.
 				this.salida.add(f);
 				continue;
@@ -62,9 +61,21 @@ public class Analizador{
 						if(this.s.empty())
 							throw new ExcepcionCadenaInvalida("Parentesis desemparejados.");
 					}
-					this.s.pop();
+					if(this.s.peek().ficha == 1)
+						this.salida.add(this.s.pop());
+					else
+						this.s.pop();
 				}
 				continue;
+			}
+			if(f.ficha == 4){
+				if(this.s.empty() || this.s.peek().ficha == 2 ||  this.s.peek().ficha == 5){
+					this.s.push(f);
+					this.salida.add(entrada.pop());
+					this.salida.add(this.s.pop());
+					i++;
+					continue;
+				}
 			}
 			if(f.ficha > 3){ // si es cualquier operacion.
 				if(!this.s.empty()){

@@ -5,6 +5,11 @@ public class Ficha{
 	public final int ficha;
 	public final String entrada;
 
+	public Ficha(){
+		ficha = 0;
+		entrada = "";
+	}
+
 	/**
 	* Constructor para generar fichas.
 	*/

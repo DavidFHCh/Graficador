@@ -54,7 +54,7 @@ public class Fichador{
         boolean emparejado = false;
         for(TipoFicha tf : tiposFichas){
           Matcher m = tf.regex.matcher(entradaCopia);
-          if(m.find()){
+          if(m.find()){ // Si encuentra una regex que cumpla lo que hay en la string se sale y va con la siguiente parte de la string.
             emparejado = true;
             String ficha1 = m.group().trim();
             fichas.add(new Ficha(tf.ficha,ficha1));
@@ -76,13 +76,13 @@ public class Fichador{
     }
 
     private void agregaGramatica(){
-      agrega("sin|cos|tan|cot|sec|csc|sqrt", 1);
+      agrega("sin\\(|cos\\(|tan\\(|cot\\(|sec\\(|csc\\(|sqrt\\(", 1);
       agrega("\\(", 2);
       agrega("\\)", 3);
       agrega("[+-]", 4);
       agrega("[*/]", 5);
       agrega("\\^", 6);
-      agrega("[0-9]+", 7);
+      agrega("(([0-9]+[.]?[0-9]*)|([0-9]*[.]?[0-9]+))", 7);
       agrega("^[x]", 8);
     }
 

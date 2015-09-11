@@ -40,7 +40,7 @@ public class TestFichador{
 		l1 = new LinkedList<Ficha>(); // Lista con la que compararemos.
 		l2 = null;
 		l3 = null;
-		l1.add(new Ficha(7,"52"));
+		l1.add(new Ficha(7,"52.3456"));
 		l1.add(new Ficha(5,"*"));				
 		l1.add(new Ficha(8,"x"));
 		l1.add(new Ficha(6,"^"));
@@ -54,8 +54,7 @@ public class TestFichador{
 		l1.add(new Ficha(7,"10"));
 		l1.add(new Ficha(3,")"));
 		l1.add(new Ficha(4,"+"));
-		l1.add(new Ficha(1,"sin"));
-		l1.add(new Ficha(2,"("));
+		l1.add(new Ficha(1,"sin("));
 		l1.add(new Ficha(8,"x"));
 		l1.add(new Ficha(4,"+"));
 		l1.add(new Ficha(7,"2"));
@@ -66,7 +65,7 @@ public class TestFichador{
 			Assert.fail();
 		}catch(ExcepcionCadenaInvalida eci){}
 		try{
-			as.hazFichas("52*x^4+8*(x+10)+sin(x+2)");
+			as.hazFichas("52.3456*x^4+8*(x+10)+sin(x+2)");
 			l2 = as.getFichas();
 		} catch(ExcepcionCadenaInvalida eci){
 			System.err.println(eci);
@@ -74,6 +73,7 @@ public class TestFichador{
 		}	
 		Assert.assertFalse(l2 == null);
 		Assert.assertTrue(l1.size() == l2.size());
+		
 		Assert.assertTrue(l1.equals(l2));
 	}
 }
