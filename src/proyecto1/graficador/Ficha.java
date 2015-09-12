@@ -2,7 +2,7 @@ package proyecto1.graficador;
 
 public class Ficha{
 
-	public final int ficha;
+	public int ficha;
 	public final String entrada;
 
 	public Ficha(){
@@ -16,6 +16,10 @@ public class Ficha{
 	public Ficha(int ficha, String	entrada){
 		this.ficha = ficha;
 		this.entrada = entrada;
+	}
+
+	public void setFicha(int f){
+		this.ficha = f;
 	}
 
 	@Override public boolean equals(Object o){

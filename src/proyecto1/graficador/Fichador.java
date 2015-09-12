@@ -48,7 +48,7 @@ public class Fichador{
      * @param la String de entrada.
      */ 
     public void hazFichas(String entrada){
-      String entradaCopia = new String(entrada);
+      String entradaCopia = new String(entrada.replaceAll("\\s+",""));
       fichas.clear();
       while(!entradaCopia.equals("")){
         boolean emparejado = false;

@@ -41,9 +41,11 @@ public class Analizador{
      * @param LinkedLista<Ficha> llamada entrada, es la lista que da despues de usar el Fichador.
      */
 	public void analizar(LinkedList<Ficha> entrada){
+		int parentesis = 0;
+		this.salida.clear();
 		this.s = new Stack<Ficha>();
 		Ficha f = new Ficha();
-		for(int i = 0; i < entrada.size();i++){
+		for(int i = 0; i <= entrada.size();i++){
 			f = entrada.pop();
 			if(f.ficha == 8 || f.ficha == 7){ // si la ficha es numero o literal.
 				this.salida.add(f);
@@ -51,9 +53,11 @@ public class Analizador{
 			}
 			if(f.ficha == 1 || f.ficha == 2){// si la ficha es un parentesis que abre o una funcion.
 				this.s.push(f);
+				parentesis++;
 				continue;
 			}
 			if(f.ficha == 3){ // si la ficha es un parentesis que cierra.
+				parentesis--;
 				if(!this.s.empty()){
 					while(this.s.peek().ficha > 2){
 						if(this.s.peek().ficha != 2 || this.s.peek().ficha != 3)
@@ -68,16 +72,36 @@ public class Analizador{
 				}
 				continue;
 			}
-			if(f.ficha == 4){
+			if(f.ficha == 4){ //Este caso es exclusivamente para operadores unarios.
 				if(this.s.empty() || this.s.peek().ficha == 2 ||  this.s.peek().ficha == 5){
+					f.setFicha(0);
 					this.s.push(f);
-					this.salida.add(entrada.pop());
-					this.salida.add(this.s.pop());
-					i++;
-					continue;
+					if(entrada.peek().ficha == 2 || entrada.peek().ficha == 1){
+						parentesis++;
+						if(entrada.peek().ficha == 1)
+							this.salida.add(entrada.pop());
+						else
+							entrada.pop();
+						while(entrada.peek().ficha != 3){
+							salida.add(entrada.pop());
+							i++;
+							if(entrada.size() == 0)
+								throw new ExcepcionCadenaInvalida("Parentesis desemparejados.");
+							if(entrada.peek().ficha == 3)
+								parentesis--;
+						}
+						entrada.pop();
+						i += 2;
+					}else{
+						this.salida.add(entrada.pop());
+						this.salida.add(this.s.pop());
+						i--;
+						continue;
+					}
 				}
+				continue;
 			}
-			if(f.ficha > 3){ // si es cualquier operacion.
+			if(f.ficha > 3){ // si es cualquier operacion binaria.
 				if(!this.s.empty()){
 					if((f.ficha <= this.s.peek().ficha && f.ficha != 6) || f.ficha < this.s.peek().ficha){
 						this.salida.add(this.s.pop());
@@ -90,7 +114,12 @@ public class Analizador{
 				}
 			}
 		}
-		while(!this.s.empty())
+		if(parentesis != 0)
+				throw new ExcepcionCadenaInvalida("Parentesis desemparejados.");
+		while(!this.s.empty()){
 			this.salida.add(this.s.pop());
+		}
 	}
+
+
 }

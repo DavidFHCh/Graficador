@@ -65,7 +65,7 @@ public class TestFichador{
 			Assert.fail();
 		}catch(ExcepcionCadenaInvalida eci){}
 		try{
-			as.hazFichas("52.3456*x^4+8*(x+10)+sin(x+2)");
+			as.hazFichas("52.3456*  x^4+8*(x+10)+sin(x+2)");
 			l2 = as.getFichas();
 		} catch(ExcepcionCadenaInvalida eci){
 			System.err.println(eci);
