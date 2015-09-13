@@ -3,12 +3,12 @@ package proyecto1.graficador;
 import java.util.*;
 
 /**
- * Clase que realiza el Arobl Sintactico.
+ * Clase que realiza la Evaluacion
  */
 public class Evaluador extends Analizador{
 
 	/**
-	* Crea un ArbolSintactico.
+	* Constructor vacio.
 	* @param String s - La String que se analizara.
 	*/
 	public Evaluador(){
@@ -52,14 +52,25 @@ public class Evaluador extends Analizador{
 			}
 		}
 		if(aEvaluar1.peek().ficha == POW){
-			aEvaluar1.pop();
-			der = evalua(aEvaluar,x);
-			izq = evalua(aEvaluar,x);
-			return Math.pow(izq,der);
+			int gorritos = 0;
+			int numEval = 0;
+			return elevar(aEvaluar1,potencias(aEvaluar1,gorritos),numEval,x);
 		}
 	}
 
-	private double potencia(LinkedList<Ficha> aEvaluar){
+	private int potencias(LinkedList<Ficha> aEvaluar,int gorritos){
+		aEvaluar.pop();
+		gorritos++;
+		if(aEvaluar.peek().ficha == POW)
+			return potencias(aEvaluar,gorritos);
+		return gorritos;
+	}
 
+	private double elevar(LinkedList<Ficha> aEvaluar, int gorritos, int numEval,double x){
+		if(numEval++ <= gorritos){
+			double der = evalua(aEvaluar,x);
+			return Math.pow(elevar(aEvaluar,gorritos,numEval,x), der);
+		}
+		return evalua(aEvaluar,x);
 	}
 }
