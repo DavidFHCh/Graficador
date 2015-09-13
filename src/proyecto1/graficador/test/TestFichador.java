@@ -73,7 +73,6 @@ public class TestFichador{
 		}	
 		Assert.assertFalse(l2 == null);
 		Assert.assertTrue(l1.size() == l2.size());
-		
 		Assert.assertTrue(l1.equals(l2));
 	}
 }
