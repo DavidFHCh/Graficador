@@ -20,31 +20,26 @@ public class Evaluador extends Analizador{
 	* @param Una Linkedlist de fichas, lista para evaluarse.
 	* @return El resultado de la operacion.
 	*/
-	public double evalua(LinkedList<Fichas> aEvualar,double x){
+	public double evalua(LinkedList<Ficha> aEvaluar,double x){
 		double izq = 0;
 		double der = 0;
 		if(aEvaluar.size() == 0)
 			return 0;
 		LinkedList<Ficha> aEvaluar1 = aEvaluar;
-		if(aEvaluar1.peek().ficha == NUM)
-			return Double.valueOf(aEvaluar1.pop());
 		if(aEvaluar1.peek().ficha == SUM_RES){
-			der = evalua(aEvaluar,x);
-			izq = evalua(aEvaluar,x);
+			der = evalua(aEvaluar1,x);
+			izq = evalua(aEvaluar1,x);
 			if(aEvaluar1.pop().entrada == "+")
 				return izq + der;
-			else{
-				aEvaluar1.pop();
+			else
 				return izq - der;
-			}
 		}
 		if(aEvaluar1.peek().ficha == MULT_DIV){
-			der = evalua(aEvaluar,x);
-			izq = evalua(aEvaluar,x);
+			der = evalua(aEvaluar1,x);
+			izq = evalua(aEvaluar1,x);
 			if(aEvaluar1.pop().entrada == "*")
 				return izq * der;
 			else{
-				aEvaluar1.pop();
 				if(der != 0)
 					return izq / der;
 				else
@@ -56,6 +51,16 @@ public class Evaluador extends Analizador{
 			int numEval = 0;
 			return elevar(aEvaluar1,potencias(aEvaluar1,gorritos),numEval,x);
 		}
+		if(aEvaluar1.peek().ficha == 0){
+			if(aEvaluar1.pop().entrada == "-")
+				return (-1)*evalua(aEvaluar1,x);
+			else
+				return evalua(aEvaluar1,x);
+		}
+		if(aEvaluar1.peek().ficha == 1){
+			funcion(aEvaluar1,x);
+		}
+	return Double.valueOf(aEvaluar1.pop().entrada);
 	}
 
 	private int potencias(LinkedList<Ficha> aEvaluar,int gorritos){
@@ -67,10 +72,31 @@ public class Evaluador extends Analizador{
 	}
 
 	private double elevar(LinkedList<Ficha> aEvaluar, int gorritos, int numEval,double x){
-		if(numEval++ <= gorritos){
+		if(numEval++ <= gorritos){// cuenta el numero de pows que se tienen que hacer.
 			double der = evalua(aEvaluar,x);
 			return Math.pow(elevar(aEvaluar,gorritos,numEval,x), der);
 		}
 		return evalua(aEvaluar,x);
+	}
+
+	private double funcion(LinkedList<Ficha> aEvaluar,double x){
+		String func = aEvaluar.pop().entrada;
+		switch(func){
+			case "sin(":
+				return Math.sin(evalua(aEvaluar,x));
+			case "cos(":
+				return Math.cos(evalua(aEvaluar,x));
+			case "tan(":
+				return Math.tan(evalua(aEvaluar,x));
+			case "cot(":
+				return 1/Math.tan(evalua(aEvaluar,x));
+			case "sec(":
+				return 1/Math.cos(evalua(aEvaluar,x));
+			case "csc(":
+				return 1/Math.sin(evalua(aEvaluar,x));
+			case "sqrt(":
+				return Math.sqrt(evalua(aEvaluar,x));
+		}
+		throw new ExcepcionOperacionNoSoportada(func);
 	}
 }
