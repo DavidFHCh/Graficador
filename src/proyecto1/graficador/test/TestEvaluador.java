@@ -41,6 +41,7 @@ public class TestEvaluador{
 		for(int j = 0; j < 1000; j++){
 			s = e1.evalua(e1.getSalida(),j,true);
 			double s1 = Math.pow(j,4)+(2*j)+1;
+			System.out.println(s + "    " + s1);
 			Assert.assertTrue(s == s1);
 		}
 	}

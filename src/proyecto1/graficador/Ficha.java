@@ -3,7 +3,7 @@ package proyecto1.graficador;
 public class Ficha{
 
 	public int ficha;
-	public final String entrada;
+	public String entrada;
 
 	public Ficha(){
 		ficha = 0;
@@ -20,6 +20,10 @@ public class Ficha{
 
 	public void setFicha(int f){
 		this.ficha = f;
+	}
+
+	public void setEntradaSigno(String novo){
+		this.entrada =  novo + this.entrada;
 	}
 
 	@Override public boolean equals(Object o){

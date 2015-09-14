@@ -76,7 +76,7 @@ public class Fichador{
     }
 
     private void agregaGramatica(){
-      agrega("sin\\(|cos\\(|tan\\(|cot\\(|sec\\(|csc\\(|sqrt\\(", 1);
+      agrega("sin|cos|tan|cot|sec|csc|sqrt", 1);
       agrega("\\(", 2);
       agrega("\\)", 3);
       agrega("[+-]", 4);

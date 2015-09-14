@@ -54,7 +54,8 @@ public class TestFichador{
 		l1.add(new Ficha(7,"10"));
 		l1.add(new Ficha(3,")"));
 		l1.add(new Ficha(4,"+"));
-		l1.add(new Ficha(1,"sin("));
+		l1.add(new Ficha(1,"sin"));
+		l1.add(new Ficha(2,"("));
 		l1.add(new Ficha(8,"x"));
 		l1.add(new Ficha(4,"+"));
 		l1.add(new Ficha(7,"2"));

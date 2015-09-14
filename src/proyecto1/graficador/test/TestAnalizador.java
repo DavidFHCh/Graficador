@@ -19,8 +19,8 @@ public class TestAnalizador{
 		f2 = new Fichador();
 		f3 = new Fichador();
 		f3.hazFichas("-5+2+2");
-		f2.hazFichas("-4+3*(5+1");
-		f1.hazFichas("-3*-sin(3.35687+4)*-2/(1-x)^2^3");
+		f2.hazFichas("4+3*(5+1");
+		f1.hazFichas("3+x*2-1");
 	}
 
 	@Test public void testgetSalida(){
@@ -40,24 +40,12 @@ public class TestAnalizador{
 		l1 = a1.getSalida();
 		l2.clear();
 		l2.add(new Ficha(7,"3"));
-		l2.add(new Ficha(0,"-"));
-		l2.add(new Ficha(1,"sin("));
-		l2.add(new Ficha(7, "3.35687"));
-		l2.add(new Ficha(4,"+"));
-		l2.add(new Ficha(7,"4"));
-		l2.add(new Ficha(0,"-"));
-		l2.add(new Ficha(7,"2"));
-		l2.add(new Ficha(5,"*"));
-		l2.add(new Ficha(7,"1"));
-		l2.add(new Ficha(4,"-"));
 		l2.add(new Ficha(8,"x"));
 		l2.add(new Ficha(7,"2"));
-		l2.add(new Ficha(7,"3"));
-		l2.add(new Ficha(6,"^"));
-		l2.add(new Ficha(6,"^"));
-		l2.add(new Ficha(0,"-"));
-		l2.add(new Ficha(5,"/"));
-		l2.add(new Ficha(5,"*"));
+		l2.add(new Ficha(5, "*"));
+		l2.add(new Ficha(4,"+"));
+		l2.add(new Ficha(7,"1"));
+		l2.add(new Ficha(4,"-"));
 		for(Ficha f: a1.getSalida())
 			System.out.println(f.ficha + "    "+ f.entrada);
 		Assert.assertTrue(l2.equals(a1.getSalida()));
