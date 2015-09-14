@@ -26,7 +26,6 @@ public class TestEvaluador{
 	}
 
 	@Test public void testEvalua(){
-		System.out.println(Double.valueOf("3.5"));
 		e1.analizar(f1.getFichas());
 		double s = e1.evalua(e1.getSalida(),0,true);
 		Assert.assertTrue(s == 81);
@@ -38,11 +37,10 @@ public class TestEvaluador{
 		e1 = new Evaluador();
 		e1.analizar(f3.getFichas());
 		for(Ficha f: e1.getSalida())
-			System.out.println(f.entrada);
+			System.out.println(f.entrada + "   " +f.ficha);
 		for(int j = 0; j < 1000; j++){
 			s = e1.evalua(e1.getSalida(),j,true);
 			double s1 = Math.pow(j,4)+(2*j)+1;
-			System.out.println(s+"   "+s1);
 			Assert.assertTrue(s == s1);
 		}
 	}

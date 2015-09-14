@@ -16,7 +16,7 @@ public class Evaluador extends Analizador{
 	}
 
 	/**
-	* Metodo que evalua la expresion.
+	* Metodo recursivo que evalua la expresion.
 	* @param Una Linkedlist de fichas, lista para evaluarse.
 	* @return El resultado de la operacion.
 	*/
@@ -29,13 +29,13 @@ public class Evaluador extends Analizador{
 		if(primera)
 			aEvaluar1 = (LinkedList<Ficha>)aEvaluar.clone();
 		//System.out.println("cosito ultima ficha" + aEvaluar1.peekLast().ficha);
-		if(aEvaluar1.peekLast().ficha == NUM)
+		if(aEvaluar1.peekLast().ficha == NUM) //caso Base 1
 			return Double.valueOf(aEvaluar1.pollLast().entrada);
-		if(aEvaluar1.peekLast().ficha == LETRA){
+		if(aEvaluar1.peekLast().ficha == LETRA){ //caso base 2
 			aEvaluar1.pollLast();
 			return x;
 		}
-		if(aEvaluar1.peekLast().ficha == SUM_RES){
+		if(aEvaluar1.peekLast().ficha == SUM_RES){ //evalua sumas y restas
 			f1 = aEvaluar1.pollLast();
 			der = evalua(aEvaluar1,x,false);
 			izq = evalua(aEvaluar1,x,false);
@@ -44,7 +44,7 @@ public class Evaluador extends Analizador{
 			else
 				return izq - der;
 		}
-		if(aEvaluar1.peekLast().ficha == MULT_DIV){
+		if(aEvaluar1.peekLast().ficha == MULT_DIV){//evalua multiplicaciones y divisiones
 			f1 = aEvaluar1.pollLast();
 			der = evalua(aEvaluar1,x,false);
 			izq = evalua(aEvaluar1,x,false);
@@ -57,12 +57,12 @@ public class Evaluador extends Analizador{
 					throw new ExcepcionNoEsUnNumero();
 			}
 		}
-		if(aEvaluar1.peekLast().ficha == POW){
-			int gorritos = 0;
-			int numEval = 0;
+		if(aEvaluar1.peekLast().ficha == POW){// evalua potencias.
+			int gorritos = 0;// numero de '^' que hay seguidos en la expresion.
+			int numEval = 0;// numero de veces que se tiene que repetir la potencia.
 			return elevar(aEvaluar1,potencias(aEvaluar1,gorritos),numEval,x);
 		}
-		if(aEvaluar1.peekLast().ficha == 0){
+		if(aEvaluar1.peekLast().ficha == 0){// evalua a los signos unarios.
 			if(aEvaluar1.pollLast().entrada == "-")
 				return (-1)*evalua(aEvaluar1,x,false);
 			else
@@ -91,7 +91,7 @@ public class Evaluador extends Analizador{
 		return evalua(aEvaluar,x,false);
 	}
 
-	private double funcion(LinkedList<Ficha> aEvaluar,double x){
+	private double funcion(LinkedList<Ficha> aEvaluar,double x){// para poder hacer mas funciones basta con agregarlas aqui y en la gramatica.
 		String func = aEvaluar.pollLast().entrada;
 		switch(func){
 			case "sin(":
