@@ -108,11 +108,11 @@ public class Analizador{
 			}
 			if(f.ficha > PARE_CER){ // si es cualquier operacion binaria.
 				if(!this.s.empty()){
-					if((f.ficha <= this.s.peek().ficha && f.ficha != POW) || f.ficha < this.s.peek().ficha){
+					if((f.ficha <= this.s.peek().ficha && f.ficha != POW) || (f.ficha == POW && f.ficha < this.s.peek().ficha)){
 						this.salida.add(this.s.pop());
 						this.s.push(f);
 					}else{
-						this.s.push(f);
+						this.salida.add(f);
 					}
 				}else{
 					this.s.push(f);

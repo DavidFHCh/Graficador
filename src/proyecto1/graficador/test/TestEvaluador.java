@@ -22,7 +22,7 @@ public class TestEvaluador{
 		e2 = new Evaluador();
 		f1.hazFichas("(3)^4");
 		f2.hazFichas("x");
-		f3.hazFichas("x^4+(2*x)+3.6");
+		f3.hazFichas("x^4+2*x+1");
 	}
 
 	@Test public void testEvalua(){
@@ -41,7 +41,7 @@ public class TestEvaluador{
 			System.out.println(f.entrada);
 		for(int j = 0; j < 1000; j++){
 			s = e1.evalua(e1.getSalida(),j,true);
-			double s1 = Math.pow(j,4)+(3*j)+3.6;
+			double s1 = Math.pow(j,4)+(2*j)+1;
 			System.out.println(s+"   "+s1);
 			Assert.assertTrue(s == s1);
 		}
