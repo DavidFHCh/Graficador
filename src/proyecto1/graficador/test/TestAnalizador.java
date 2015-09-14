@@ -58,6 +58,8 @@ public class TestAnalizador{
 		l2.add(new Ficha(5,"/"));
 		l2.add(new Ficha(0,"-"));
 		l2.add(new Ficha(5,"*"));
+		for(Ficha f: a1.getSalida())
+			System.out.println(f.ficha + "    "+ f.entrada);
 		Assert.assertTrue(l2.equals(a1.getSalida()));
 		a1.analizar(f3.getFichas());
 		l2 = a1.getSalida();

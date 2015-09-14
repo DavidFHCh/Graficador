@@ -18,7 +18,7 @@ public class Analizador{
 	public static int FUNC = 1;
 
 	private LinkedList<Ficha> salida;
-	private Stack<Ficha> s;
+	private LinkedList<Ficha> s;
 
 	/**
 	* Constructor sin parametros.
@@ -43,7 +43,7 @@ public class Analizador{
 	public void analizar(LinkedList<Ficha> entrada){
 		int parentesis = 0;
 		this.salida.clear();
-		this.s = new Stack<Ficha>();
+		this.s = new LinkedList<Ficha>();
 		Ficha f = new Ficha();
 		int tamaño = entrada.size();
 		for(int i = 0; i < tamaño;i++){
@@ -60,14 +60,14 @@ public class Analizador{
 			}
 			if(f.ficha == PARE_CER){ // si la ficha es un parentesis que cierra.
 				parentesis--;
-				if(!this.s.empty()){
-					while(this.s.peek().ficha > PARE_AB){
-						if(this.s.peek().ficha != PARE_AB || this.s.peek().ficha != PARE_CER)
+				if(this.s.size() != 0){
+					while(this.s.peekLast().ficha > PARE_AB){
+						if(this.s.peekLast().ficha != PARE_AB || this.s.peekLast().ficha != PARE_CER)
 							this.salida.add(this.s.pop());
-						if(this.s.empty())
+						if(this.s.size() == 0)
 							throw new ExcepcionCadenaInvalida("Parentesis desemparejados.");
 					}
-					if(this.s.peek().ficha == FUNC)
+					if(this.s.peekLast().ficha == FUNC)
 						this.salida.add(this.s.pop());
 					else
 						this.s.pop();
@@ -75,7 +75,7 @@ public class Analizador{
 				continue;
 			}
 			if(f.ficha == SUM_RES){ //Este caso es exclusivamente para operadores unarios.
-				if(i==0 || (!this.s.empty() && (this.s.peek().ficha == PARE_AB ||  this.s.peek().ficha == MULT_DIV))){
+				if(i==0 || (this.s.size() != 0 && (this.s.peekLast().ficha == PARE_AB ||  this.s.peekLast().ficha == MULT_DIV))){
 					f.setFicha(0);
 					this.s.push(f);
 					if(entrada.peek().ficha == PARE_AB || entrada.peek().ficha == FUNC){
@@ -107,12 +107,12 @@ public class Analizador{
 				}
 			}
 			if(f.ficha > PARE_CER){ // si es cualquier operacion binaria.
-				if(!this.s.empty()){
-					if((f.ficha <= this.s.peek().ficha && f.ficha != POW) || (f.ficha == POW && f.ficha < this.s.peek().ficha)){
+				if(this.s.size() != 0){
+					if((f.ficha <= this.s.peekLast().ficha && f.ficha != POW) || (f.ficha == POW && f.ficha < this.s.peekLast().ficha)){
 						this.salida.add(this.s.pop());
 						this.s.push(f);
 					}else{
-						this.salida.add(f);
+						this.s.push(f);
 					}
 				}else{
 					this.s.push(f);
@@ -121,7 +121,7 @@ public class Analizador{
 		}
 		if(parentesis != 0)
 				throw new ExcepcionCadenaInvalida("Parentesis desemparejados.");
-		while(!this.s.empty()){
+		while(this.s.size() != 0){
 			this.salida.add(this.s.pop());
 		}
 	}
