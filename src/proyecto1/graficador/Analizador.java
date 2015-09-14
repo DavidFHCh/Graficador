@@ -45,8 +45,10 @@ public class Analizador{
 		this.salida.clear();
 		this.s = new Stack<Ficha>();
 		Ficha f = new Ficha();
-		for(int i = 0; i <= entrada.size();i++){
+		int tamaño = entrada.size();
+		for(int i = 0; i < tamaño;i++){
 			f = entrada.pop();
+			//System.out.println(f.ficha + "     " + f.entrada);
 			if(f.ficha == LETRA || f.ficha == NUM){ // si la ficha es numero o literal.
 				this.salida.add(f);
 				continue;
@@ -73,33 +75,36 @@ public class Analizador{
 				continue;
 			}
 			if(f.ficha == SUM_RES){ //Este caso es exclusivamente para operadores unarios.
-				if(this.s.empty() || this.s.peek().ficha == PARE_AB ||  this.s.peek().ficha == MULT_DIV){
+				if(i==0 || (!this.s.empty() && (this.s.peek().ficha == PARE_AB ||  this.s.peek().ficha == MULT_DIV))){
 					f.setFicha(0);
 					this.s.push(f);
 					if(entrada.peek().ficha == PARE_AB || entrada.peek().ficha == FUNC){
 						parentesis++;
-						if(entrada.peek().ficha == FUNC)
+						if(entrada.peek().ficha == FUNC){
 							this.salida.add(entrada.pop());
-						else
+							i++;
+						}
+						else{
 							entrada.pop();
+							i++;
+						}
 						while(entrada.peek().ficha != PARE_CER){
 							salida.add(entrada.pop());
-							i--;
+							i++;
 							if(entrada.size() == 0)
 								throw new ExcepcionCadenaInvalida("Parentesis desemparejados.");
 							if(entrada.peek().ficha == PARE_CER)
 								parentesis--;
 						}
 						entrada.pop();
-						i-=1;
+						i++;
 					}else{
 						this.salida.add(entrada.pop());
 						this.salida.add(this.s.pop());
-						i--;
-						continue;
+						i++;
 					}
+					continue;
 				}
-				continue;
 			}
 			if(f.ficha > PARE_CER){ // si es cualquier operacion binaria.
 				if(!this.s.empty()){

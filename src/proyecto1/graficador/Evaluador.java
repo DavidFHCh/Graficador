@@ -20,24 +20,35 @@ public class Evaluador extends Analizador{
 	* @param Una Linkedlist de fichas, lista para evaluarse.
 	* @return El resultado de la operacion.
 	*/
-	public double evalua(LinkedList<Ficha> aEvaluar,double x){
+	@SuppressWarnings("unchecked") public double evalua(LinkedList<Ficha> aEvaluar,double x,boolean primera){
 		double izq = 0;
 		double der = 0;
-		if(aEvaluar.size() == 0)
-			return 0;
+		int k = 0;
+		Ficha f1;
 		LinkedList<Ficha> aEvaluar1 = aEvaluar;
-		if(aEvaluar1.peek().ficha == SUM_RES){
-			der = evalua(aEvaluar1,x);
-			izq = evalua(aEvaluar1,x);
-			if(aEvaluar1.pop().entrada == "+")
+		if(primera)
+			aEvaluar1 = (LinkedList<Ficha>)aEvaluar.clone();
+		//System.out.println("cosito ultima ficha" + aEvaluar1.peekLast().ficha);
+		if(aEvaluar1.peekLast().ficha == NUM)
+			return Double.valueOf(aEvaluar1.pollLast().entrada);
+		if(aEvaluar1.peekLast().ficha == LETRA){
+			aEvaluar1.pollLast();
+			return x;
+		}
+		if(aEvaluar1.peekLast().ficha == SUM_RES){
+			f1 = aEvaluar1.pollLast();
+			der = evalua(aEvaluar1,x,false);
+			izq = evalua(aEvaluar1,x,false);
+			if(f1.entrada.equals("+"))
 				return izq + der;
 			else
 				return izq - der;
 		}
-		if(aEvaluar1.peek().ficha == MULT_DIV){
-			der = evalua(aEvaluar1,x);
-			izq = evalua(aEvaluar1,x);
-			if(aEvaluar1.pop().entrada == "*")
+		if(aEvaluar1.peekLast().ficha == MULT_DIV){
+			f1 = aEvaluar1.pollLast();
+			der = evalua(aEvaluar1,x,false);
+			izq = evalua(aEvaluar1,x,false);
+			if(f1.entrada.equals("*"))
 				return izq * der;
 			else{
 				if(der != 0)
@@ -46,56 +57,57 @@ public class Evaluador extends Analizador{
 					throw new ExcepcionNoEsUnNumero();
 			}
 		}
-		if(aEvaluar1.peek().ficha == POW){
+		if(aEvaluar1.peekLast().ficha == POW){
 			int gorritos = 0;
 			int numEval = 0;
 			return elevar(aEvaluar1,potencias(aEvaluar1,gorritos),numEval,x);
 		}
-		if(aEvaluar1.peek().ficha == 0){
-			if(aEvaluar1.pop().entrada == "-")
-				return (-1)*evalua(aEvaluar1,x);
+		if(aEvaluar1.peekLast().ficha == 0){
+			if(aEvaluar1.pollLast().entrada == "-")
+				return (-1)*evalua(aEvaluar1,x,false);
 			else
-				return evalua(aEvaluar1,x);
+				return evalua(aEvaluar1,x,false);
 		}
-		if(aEvaluar1.peek().ficha == 1){
-			funcion(aEvaluar1,x);
+		if(aEvaluar1.peekLast().ficha == 1){
+			return funcion(aEvaluar1,x);
 		}
-	return Double.valueOf(aEvaluar1.pop().entrada);
+		return 0;
 	}
 
 	private int potencias(LinkedList<Ficha> aEvaluar,int gorritos){
-		aEvaluar.pop();
+		aEvaluar.pollLast();
 		gorritos++;
-		if(aEvaluar.peek().ficha == POW)
+		if(aEvaluar.peekLast().ficha == POW)
 			return potencias(aEvaluar,gorritos);
 		return gorritos;
 	}
 
 	private double elevar(LinkedList<Ficha> aEvaluar, int gorritos, int numEval,double x){
-		if(numEval++ <= gorritos){// cuenta el numero de pows que se tienen que hacer.
-			double der = evalua(aEvaluar,x);
-			return Math.pow(elevar(aEvaluar,gorritos,numEval,x), der);
+		if(numEval < gorritos){// cuenta el numero de pows que se tienen que hacer.
+			double der = evalua(aEvaluar,x,false);
+			double izq =elevar(aEvaluar,gorritos,++numEval,x);
+			return Math.pow(izq, der);
 		}
-		return evalua(aEvaluar,x);
+		return evalua(aEvaluar,x,false);
 	}
 
 	private double funcion(LinkedList<Ficha> aEvaluar,double x){
-		String func = aEvaluar.pop().entrada;
+		String func = aEvaluar.pollLast().entrada;
 		switch(func){
 			case "sin(":
-				return Math.sin(evalua(aEvaluar,x));
+				return Math.sin(evalua(aEvaluar,x,false));
 			case "cos(":
-				return Math.cos(evalua(aEvaluar,x));
+				return Math.cos(evalua(aEvaluar,x,false));
 			case "tan(":
-				return Math.tan(evalua(aEvaluar,x));
+				return Math.tan(evalua(aEvaluar,x,false));
 			case "cot(":
-				return 1/Math.tan(evalua(aEvaluar,x));
+				return 1/Math.tan(evalua(aEvaluar,x,false));
 			case "sec(":
-				return 1/Math.cos(evalua(aEvaluar,x));
+				return 1/Math.cos(evalua(aEvaluar,x,false));
 			case "csc(":
-				return 1/Math.sin(evalua(aEvaluar,x));
+				return 1/Math.sin(evalua(aEvaluar,x,false));
 			case "sqrt(":
-				return Math.sqrt(evalua(aEvaluar,x));
+				return Math.sqrt(evalua(aEvaluar,x,false));
 		}
 		throw new ExcepcionOperacionNoSoportada(func);
 	}

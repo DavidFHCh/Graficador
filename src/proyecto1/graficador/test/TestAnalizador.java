@@ -11,22 +11,24 @@ import java.util.*;
 public class TestAnalizador{
 
 	private Analizador a1;
-	private Fichador f1,f2;
+	private Fichador f1,f2,f3;
 
 	public TestAnalizador(){
 		a1 = new Analizador();
 		f1 = new Fichador();
 		f2 = new Fichador();
+		f3 = new Fichador();
+		f3.hazFichas("-5+2+2");
 		f2.hazFichas("-4+3*(5+1");
 		f1.hazFichas("-3*-sin(3.35687+4)*2/-(1-x)^2^3");
 	}
 
-	@Test public void testgetSalida(){
+	/*@Test public void testgetSalida(){
 		a1.analizar(f1.getFichas());//
 		LinkedList<Ficha> l = a1.getSalida();
 		Assert.assertTrue(l != null);
 		Assert.assertTrue(l.size() == 19);
-	}
+	}*/
 
 	@Test public void testaAnalizar(){
 		LinkedList<Ficha> l2 = f2.getFichas() ,l1 = f1.getFichas();
@@ -57,5 +59,8 @@ public class TestAnalizador{
 		l2.add(new Ficha(0,"-"));
 		l2.add(new Ficha(5,"*"));
 		Assert.assertTrue(l2.equals(a1.getSalida()));
+		a1.analizar(f3.getFichas());
+		l2 = a1.getSalida();
+		Assert.assertTrue(l2.size() == 6);
 	}
 }
