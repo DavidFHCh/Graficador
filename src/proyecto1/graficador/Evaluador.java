@@ -63,7 +63,7 @@ public class Evaluador extends Analizador{
 			return elevar(aEvaluar1,potencias(aEvaluar1,gorritos),numEval,x);
 		}
 		if(aEvaluar1.peekLast().ficha == 0){// evalua a los signos unarios.
-			if(aEvaluar1.removeLast().entrada.equals("+"))
+			if(aEvaluar1.removeLast().entrada.equals("-"))
 				return (-1)*evalua(aEvaluar1,x,false);
 			else
 				return evalua(aEvaluar1,x,false);

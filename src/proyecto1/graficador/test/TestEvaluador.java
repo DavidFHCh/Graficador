@@ -38,10 +38,7 @@ public class TestEvaluador{
 		e1.setSalida(e1.analizar(f3.getFichas()));
 		for(int j = -1000; j < 1000; j++){
 			s = e1.evalua(e1.getSalida(),j,true);
-					for(Ficha f: e1.getSalida())
-			System.out.println(f.entrada + "   " +f.ficha);
-			double s1 = Math.sin(Math.pow(j,4)+(2*j)+1);
-			System.out.println(s + "    " + s1);
+			double s1 = -Math.sin(Math.pow(j,4)+(2*j)+1);
 			Assert.assertTrue(s == s1);
 		}
 	}

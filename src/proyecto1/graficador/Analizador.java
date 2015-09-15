@@ -6,7 +6,7 @@ import java.util.*;
 /**
 * Clase que analiza las fichas y las prepapra para el Arbol Sintactico.
 */
-public class Analizador{
+public class Analizador extends Fichador{
 
 	public final static int LETRA = 8;
 	public final static int NUM = 7;	
@@ -23,6 +23,7 @@ public class Analizador{
 	* Constructor sin parametros.
 	*/ 
 	public Analizador(){
+		super();
 		salida1 = new LinkedList<Ficha>();
 	}
 
@@ -42,7 +43,7 @@ public class Analizador{
      * Metodo que analiza las Fichas, con ayuda de la gramatica.
      * @param LinkedLista<Ficha> llamada entrada, es la lista que da despues de usar el Fichador.
      */
-	public LinkedList<Ficha> analizar(LinkedList<Ficha> entrada1){
+	@SuppressWarnings("unchecked") public LinkedList<Ficha> analizar(LinkedList<Ficha> entrada1){
 		LinkedList<Ficha> operadores = new LinkedList<Ficha>();
 		LinkedList<Ficha> salida = new LinkedList<Ficha>();
 		LinkedList<Ficha> entrada = (LinkedList<Ficha>)entrada1.clone();
