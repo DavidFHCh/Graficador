@@ -8,6 +8,7 @@ import java.util.*;
 public class Graficador{
 
 	public static void main(String[] args){
+		LinkedList<LinkedList<Double>> ldeRes = new LinkedList<LinkedList<Double>>();
 		double x1 = -10;
 		double x2 = 10;
 		double y1 = -10;
@@ -30,8 +31,14 @@ public class Graficador{
 		eval.setSalida(eval.analizar(eval.getFichas()));
 		while(x0 <= x2){
 			resultados.add(eval.evalua(eval.getSalida(),x0,true));
-			x0 += 1/proporcion;
+			System.out.println("que pedo?");
+			x0 += 2/proporcion;
 		}
- 		GraficaSVG svg = new GraficaSVG(800,600,proporcion,x1,x2,y1,y2,resultados);
+		ldeRes.add(resultados);
+ 		GraficaSVG svg = new GraficaSVG(800,600,proporcion,x1,x2,y1,y2,ldeRes);
+ 		LinkedList<String> grafSvg = svg.getSalida();
+ 		while(grafSvg.peek() != null){
+ 			System.out.println(grafSvg.poll());
+ 		}
 	}
 }
