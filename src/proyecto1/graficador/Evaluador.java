@@ -30,13 +30,13 @@ public class Evaluador extends Analizador{
 			aEvaluar1 = (LinkedList<Ficha>)aEvaluar.clone();
 		//System.out.println("cosito ultima ficha" + aEvaluar1.peekLast().ficha);
 		if(aEvaluar1.peekLast().ficha == NUM) //caso Base 1
-			return Double.valueOf(aEvaluar1.pollLast().entrada);
+			return Double.valueOf(aEvaluar1.removeLast().entrada);
 		if(aEvaluar1.peekLast().ficha == LETRA){ //caso base 2
-			aEvaluar1.pollLast();
+			aEvaluar1.removeLast();
 			return x;
 		}
 		if(aEvaluar1.peekLast().ficha == SUM_RES){ //evalua sumas y restas
-			f1 = aEvaluar1.pollLast();
+			f1 = aEvaluar1.removeLast();
 			der = evalua(aEvaluar1,x,false);
 			izq = evalua(aEvaluar1,x,false);
 			if(f1.entrada.equals("+"))
@@ -45,7 +45,7 @@ public class Evaluador extends Analizador{
 				return izq - der;
 		}
 		if(aEvaluar1.peekLast().ficha == MULT_DIV){//evalua multiplicaciones y divisiones
-			f1 = aEvaluar1.pollLast();
+			f1 = aEvaluar1.removeLast();
 			der = evalua(aEvaluar1,x,false);
 			izq = evalua(aEvaluar1,x,false);
 			if(f1.entrada.equals("*"))
@@ -63,7 +63,7 @@ public class Evaluador extends Analizador{
 			return elevar(aEvaluar1,potencias(aEvaluar1,gorritos),numEval,x);
 		}
 		if(aEvaluar1.peekLast().ficha == 0){// evalua a los signos unarios.
-			if(aEvaluar1.pollLast().entrada == "-")
+			if(aEvaluar1.removeLast().entrada.equals("+"))
 				return (-1)*evalua(aEvaluar1,x,false);
 			else
 				return evalua(aEvaluar1,x,false);
@@ -75,7 +75,7 @@ public class Evaluador extends Analizador{
 	}
 
 	private int potencias(LinkedList<Ficha> aEvaluar,int gorritos){
-		aEvaluar.pollLast();
+		aEvaluar.removeLast();
 		gorritos++;
 		if(aEvaluar.peekLast().ficha == POW)
 			return potencias(aEvaluar,gorritos);
@@ -92,22 +92,31 @@ public class Evaluador extends Analizador{
 	}
 
 	private double funcion(LinkedList<Ficha> aEvaluar,double x){// para poder hacer mas funciones basta con agregarlas aqui y en la gramatica.
-		String func = aEvaluar.pollLast().entrada;
+		String func = aEvaluar.removeLast().entrada;
+		double evaluacion = evalua(aEvaluar,x,false);
 		switch(func){
-			case "sin(":
-				return Math.sin(evalua(aEvaluar,x,false));
-			case "cos(":
-				return Math.cos(evalua(aEvaluar,x,false));
-			case "tan(":
-				return Math.tan(evalua(aEvaluar,x,false));
-			case "cot(":
-				return 1/Math.tan(evalua(aEvaluar,x,false));
-			case "sec(":
-				return 1/Math.cos(evalua(aEvaluar,x,false));
-			case "csc(":
-				return 1/Math.sin(evalua(aEvaluar,x,false));
-			case "sqrt(":
-				return Math.sqrt(evalua(aEvaluar,x,false));
+			case "sin":
+				return Math.sin(evaluacion);
+			case "cos":
+				return Math.cos(evaluacion);
+			case "tan":
+				return Math.tan(evaluacion);
+			case "cot":
+				if(evaluacion == 0)
+					throw new ExcepcionNoEsUnNumero();
+				return 1/Math.tan(evaluacion);
+			case "sec":
+			if(evaluacion == 0)
+					throw new ExcepcionNoEsUnNumero();
+				return 1/Math.cos(evaluacion);
+			case "csc":
+			if(evaluacion == 0)
+					throw new ExcepcionNoEsUnNumero();
+				return 1/Math.sin(evaluacion);
+			case "sqrt":
+			if(evaluacion < 0)
+					throw new ExcepcionNoEsUnNumero();
+				return Math.sqrt(evaluacion);
 		}
 		throw new ExcepcionOperacionNoSoportada(func);
 	}

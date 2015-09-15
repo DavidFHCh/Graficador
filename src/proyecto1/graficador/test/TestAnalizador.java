@@ -48,11 +48,9 @@ public class TestAnalizador{
 		l2.add(new Ficha(8,"x"));
 		l2.add(new Ficha(7,"2"));
 		l2.add(new Ficha(4,"+"));
-		l2.add(new Ficha(4,"^"));
-		l2.add(new Ficha(4,"*"));
+		l2.add(new Ficha(6,"^"));
+		l2.add(new Ficha(5,"*"));
 		l2.add(new Ficha(4,"+"));
-		for(Ficha f: a1.getSalida())
-			System.out.println(f.ficha + "    " + f.entrada);
 		Assert.assertTrue(l2.equals(a1.getSalida()));
 		a1.setSalida(a1.analizar(f3.getFichas()));
 		l2 = a1.getSalida();

@@ -52,7 +52,6 @@ public class Analizador{
 		int i = 0;
 		while(entrada.size() != 0){
 			f = entrada.remove();
-			System.out.println(f.equals(entrada1.get(i)));
 			if(f.ficha == NUM || f.ficha == LETRA){
 				salida.add(f);
 			}
@@ -97,10 +96,14 @@ public class Analizador{
 						}
 					}
 				}else{
-					while((operadores.size() != 0 &&(f.ficha <= operadores.peek().ficha && f.ficha != POW) || (f.ficha == POW && f.ficha < operadores.peek().ficha))){
-						salida.add(operadores.pop());
+					if(operadores.size() == 0){
+						operadores.push(f);
+					}else{
+						while((operadores.size() != 0 &&(f.ficha <= operadores.peek().ficha && f.ficha != POW) || (f.ficha == POW && f.ficha < operadores.peek().ficha))){
+							salida.add(operadores.pop());
+						}
+						operadores.push(f);
 					}
-					operadores.push(f);
 				}
 			}
 			if(f.ficha == PARE_AB){
