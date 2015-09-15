@@ -18,14 +18,13 @@ public class TestAnalizador{
 		f1 = new Fichador();
 		f2 = new Fichador();
 		f3 = new Fichador();
-		f3.hazFichas("-5+2+2");
+		f3.hazFichas("-(5+2+2)");
 		f2.hazFichas("4+3*(5+1");
-		f1.hazFichas("3+x*2-1");
+		f1.hazFichas("3+x*-sin(2-1)^(x+2)");
 	}
 
 	@Test public void testgetSalida(){
-		a1.analizar(f1.getFichas());//
-		LinkedList<Ficha> l = a1.getSalida();
+		LinkedList<Ficha> l = a1.analizar(f1.getFichas());;
 		Assert.assertTrue(l != null);
 		//Assert.assertTrue(l.size() == 19);
 	}
@@ -36,20 +35,26 @@ public class TestAnalizador{
 			a1.analizar(l2);
 			Assert.fail();
 		}catch(ExcepcionCadenaInvalida eci){}
-		a1.analizar(l1);
+		a1.setSalida(a1.analizar(l1));
 		l1 = a1.getSalida();
 		l2.clear();
 		l2.add(new Ficha(7,"3"));
 		l2.add(new Ficha(8,"x"));
 		l2.add(new Ficha(7,"2"));
-		l2.add(new Ficha(5, "*"));
-		l2.add(new Ficha(4,"+"));
-		l2.add(new Ficha(7,"1"));
+		l2.add(new Ficha(7, "1"));
 		l2.add(new Ficha(4,"-"));
+		l2.add(new Ficha(1,"sin"));
+		l2.add(new Ficha(0,"-"));
+		l2.add(new Ficha(8,"x"));
+		l2.add(new Ficha(7,"2"));
+		l2.add(new Ficha(4,"+"));
+		l2.add(new Ficha(4,"^"));
+		l2.add(new Ficha(4,"*"));
+		l2.add(new Ficha(4,"+"));
 		for(Ficha f: a1.getSalida())
-			System.out.println(f.ficha + "    "+ f.entrada);
+			System.out.println(f.ficha + "    " + f.entrada);
 		Assert.assertTrue(l2.equals(a1.getSalida()));
-		a1.analizar(f3.getFichas());
+		a1.setSalida(a1.analizar(f3.getFichas()));
 		l2 = a1.getSalida();
 		Assert.assertTrue(l2.size() == 6);
 	}

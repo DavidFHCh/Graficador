@@ -17,15 +17,13 @@ public class Analizador{
 	public final static int PARE_AB = 2;
 	public final static int FUNC = 1;
 
-	private LinkedList<Ficha> salida;
-	private LinkedList<Ficha> operadores;
+	private LinkedList<Ficha> salida1;
 
 	/**
 	* Constructor sin parametros.
 	*/ 
 	public Analizador(){
-		salida = new LinkedList<Ficha>();
-		operadores = new LinkedList<Ficha>();
+		salida1 = new LinkedList<Ficha>();
 	}
 
 	/**
@@ -33,7 +31,11 @@ public class Analizador{
 	* @return LinkedList<Ficha> llamada Salida.
 	*/
 	public LinkedList<Ficha> getSalida(){
-		return this.salida;
+		return this.salida1;
+	}
+
+	public void setSalida(LinkedList<Ficha> sal){
+		this.salida1 = sal;
 	}
 
 	/**
@@ -41,6 +43,7 @@ public class Analizador{
      * @param LinkedLista<Ficha> llamada entrada, es la lista que da despues de usar el Fichador.
      */
 	public LinkedList<Ficha> analizar(LinkedList<Ficha> entrada1){
+		LinkedList<Ficha> operadores = new LinkedList<Ficha>();
 		LinkedList<Ficha> salida = new LinkedList<Ficha>();
 		LinkedList<Ficha> entrada = (LinkedList<Ficha>)entrada1.clone();
 		salida.clear();
@@ -49,6 +52,7 @@ public class Analizador{
 		int i = 0;
 		while(entrada.size() != 0){
 			f = entrada.remove();
+			System.out.println(f.equals(entrada1.get(i)));
 			if(f.ficha == NUM || f.ficha == LETRA){
 				salida.add(f);
 			}
@@ -57,8 +61,12 @@ public class Analizador{
 			}
 			if(f.ficha == MULT_DIV || f.ficha == SUM_RES || f.ficha == POW){
 				if(f.ficha == SUM_RES){
-					Ficha f1 = entrada1.get(-i);
-					if(f1.ficha == NUM || f1.ficha == PARE_CER || f1.ficha == LETRA){
+					Ficha f1;
+					if(i == 0)
+						f1 = null;
+					else
+					 	f1 = entrada1.get(i-1);
+					if(f1 != null && (f1.ficha == NUM || f1.ficha == PARE_CER || f1.ficha == LETRA)){
 						while((operadores.size() != 0 &&(f.ficha <= operadores.peek().ficha && f.ficha != POW) || (f.ficha == POW && f.ficha < operadores.peek().ficha))){
 							salida.add(operadores.pop());
 						}
@@ -70,10 +78,22 @@ public class Analizador{
 							salida.add(entrada.remove());
 							salida.add(operadores.pop());
 							i++;
-							continue;
-						}
-						if(entrada.peek().ficha == PARE_AB){
-							
+						}else{
+							if(entrada.peek().ficha == PARE_AB || entrada.peek().ficha == FUNC){
+								LinkedList<Ficha> particion = new LinkedList<Ficha>();
+								while(entrada.peek().ficha != PARE_CER){
+									particion.add(entrada.remove());
+									i++;
+									if(entrada.size() == 0)
+										throw new ExcepcionCadenaInvalida("Parentesis desemparejados.");
+								}
+								particion.add(entrada.remove());
+								i++;
+								LinkedList<Ficha> l = analizar(particion);
+								while(l.size() != 0)
+									salida.add(l.removeFirst());
+								salida.add(operadores.pop());
+							}
 						}
 					}
 				}else{
@@ -87,18 +107,17 @@ public class Analizador{
 				operadores.push(f);
 			}
 			if(f.ficha == PARE_CER){
-				operadores.pop();
-				while(operadores.peek().ficha != PARE_AB && operadores.size() != 0)
+				while(operadores.size() != 0 && operadores.peek().ficha != PARE_AB)
 					salida.add(operadores.pop());
 				if(operadores.size() == 0)
 						throw new ExcepcionCadenaInvalida("Parentesis desemparejados.");
 				if(operadores.peek().ficha == PARE_AB){
 					operadores.pop();
-					if(operadores.peek().ficha == FUNC)
+					if(operadores.size() != 0 && operadores.peek().ficha == FUNC)
 						salida.add(operadores.pop());
 				}
 			}
-			i++;
+		i++;
 		}
 		while(operadores.size() != 0){
 			if(operadores.peek().ficha == PARE_AB)
