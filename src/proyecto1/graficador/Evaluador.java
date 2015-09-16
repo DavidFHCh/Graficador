@@ -1,5 +1,6 @@
 package proyecto1.graficador;
 
+import proyecto1.graficador.Analizador;
 import java.util.*;
 
 /**
@@ -17,7 +18,8 @@ public class Evaluador extends Analizador{
 
 	/**
 	* Metodo recursivo que evalua la expresion.
-	* @param Una Linkedlist de fichas, lista para evaluarse.
+	* @param aEvaluar Linkedlist de fichas, lista para evaluarse.
+        * @param x
 	* @return El resultado de la operacion.
 	*/
 	@SuppressWarnings("unchecked") public double evalua(LinkedList<Ficha> aEvaluar,double x,boolean primera){
@@ -51,10 +53,7 @@ public class Evaluador extends Analizador{
 			if(f1.entrada.equals("*"))
 				return izq * der;
 			else{
-				if(der != 0)
 					return izq / der;
-				else
-					throw new ExcepcionNoEsUnNumero();
 			}
 		}
 		if(aEvaluar1.peekLast().ficha == POW){// evalua potencias.
@@ -102,20 +101,12 @@ public class Evaluador extends Analizador{
 			case "tan":
 				return Math.tan(evaluacion);
 			case "cot":
-				if(evaluacion == 0)
-					throw new ExcepcionNoEsUnNumero();
 				return 1/Math.tan(evaluacion);
 			case "sec":
-			if(evaluacion == 0)
-					throw new ExcepcionNoEsUnNumero();
 				return 1/Math.cos(evaluacion);
 			case "csc":
-			if(evaluacion == 0)
-					throw new ExcepcionNoEsUnNumero();
 				return 1/Math.sin(evaluacion);
 			case "sqrt":
-			if(evaluacion < 0)
-					throw new ExcepcionNoEsUnNumero();
 				return Math.sqrt(evaluacion);
 		}
 		throw new ExcepcionOperacionNoSoportada(func);

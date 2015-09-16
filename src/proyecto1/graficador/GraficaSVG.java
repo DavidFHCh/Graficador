@@ -13,7 +13,7 @@ public class GraficaSVG{
 	private int ancho;
 	private int alto;
 	private double proporcionX;
-    private double proporcionY;
+        private double proporcionY;
 	private final static String[] colores = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
 
 	public GraficaSVG(int ancho, int alto,double proporcionX ,double proporcionY,double x1, double x2,double y1 , double y2, LinkedList<Double> valoresY){
@@ -74,7 +74,7 @@ public class GraficaSVG{
 				color += colores[(int)(Math.random()*colores.length)];
             double anterior = 0;
 		for(Double val: valoresY){
-            if(anterior == 0){
+            if(anterior == 0 || (val-anterior) != proporcionY){
                 anterior = val;
                 continue;
             }
