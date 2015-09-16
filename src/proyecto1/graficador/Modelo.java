@@ -13,7 +13,7 @@ public class Modelo{
 	private int ancho;
 	private int alto;
 	private String funcion;
-	LinkedList<Double> lDeRes;
+	private LinkedList<Double> lDeRes;
 
 	public Modelo(double x1,double y1,double x2, double y2, int ancho, int alto, String funcion){
 		this.x1 = x1;
@@ -66,9 +66,17 @@ public class Modelo{
 		proporcionY = setProporcion(this.alto,this.y1,this.y2);
 	}
 
-	public LinkedList<Double> evalua(){
+	public LinkedList<Double> getRes(){
+		return this.lDeRes;
+	} 
+
+	private void setLdeRes(LinkedList<Double> res){
+		this.lDeRes = res;
+	}
+
+	public void evalua(){
 		LinkedList<Double> resultados = new LinkedList<Double>();
-		double x0 = 0;
+		double x0 = x1;
 		Evaluador eval = new Evaluador();
 		eval.hazFichas(funcion);
 		eval.setSalida(eval.analizar(eval.getFichas()));
@@ -84,19 +92,24 @@ public class Modelo{
 			resultados.add(val);
 			x0 += 1/proporcionX;
 		}
-		lDeRes = resultados;
-		return resultados;
+		this.lDeRes = resultados;
 	}
 
 	public LinkedList<String> aSVG(){
 		GraficaSVG svg = new GraficaSVG(ancho,alto,proporcionX,proporcionY,x1,x2,y1,y2,lDeRes);
- 		LinkedList<String> grafSvg = svg.getSalida();
+ 		LinkedList<String> grafSvg = svg.pintaGrafica();
  		return grafSvg;
+	}
+
+	public LinkedList<String> aCanvas(){
+		GraficaSVG svg = new GraficaSVG(ancho,alto,proporcionX,proporcionY,x1,x2,y1,y2,lDeRes);
+		LinkedList<String> grafSvg = svg.graficaCanvas();
+		return grafSvg;
 	}
 
 	private double setProporcion(int altoAncho, double x1, double x2){
 		if(this.x2 < this.x1 || this.y2 < this.y1)
-			throw new ExcepcionIntervalosInvalidos();
+			throw new ExcepcionIntervalosInvalidos("Intervalos Invalidos, checalos.");
 		double prop = altoAncho/(x2-x1);
 		return prop;
 	}

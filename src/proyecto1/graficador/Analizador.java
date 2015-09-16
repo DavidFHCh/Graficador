@@ -29,7 +29,7 @@ public class Analizador extends Fichador{
 
 	/**
 	* Metodo para obtener la Lista Salida.
-	* @return LinkedList<Ficha> llamada Salida.
+	* @return LinkedList -  llamada Salida.
 	*/
 	public LinkedList<Ficha> getSalida(){
 		return this.salida1;
@@ -41,7 +41,8 @@ public class Analizador extends Fichador{
 
 	/**
      * Metodo que analiza las Fichas, con ayuda de la gramatica.
-     * @param LinkedLista<Ficha> llamada entrada, es la lista que da despues de usar el Fichador.
+     * @param entrada1 - llamada entrada, es la lista que da despues de usar el Fichador.
+     * @return LinkedList - las Fichas en postorden.
      */
 	@SuppressWarnings("unchecked") public LinkedList<Ficha> analizar(LinkedList<Ficha> entrada1){
 		LinkedList<Ficha> operadores = new LinkedList<Ficha>();

@@ -31,6 +31,9 @@
       </classpath>
       <compilerarg value="-Xlint:unchecked"/>
     </javac>
+    <copy todir="build/proyecto1/graficador">
+      <fileset dir="src/proyecto1/graficador" includes="**/*.fxml"/>
+    </copy>
   </target>
 
   <target name="doc" depends="Graficador.jar">
@@ -57,6 +60,7 @@
     <delete file="Graficador.jar"/>
     <delete dir="${build.dir}"/>
     <delete dir="${doc.dir}"/>
+    <delete dir="${dist.dir}"/>
   </target>
 
   <target name="test" depends="Graficador.jar">
@@ -74,5 +78,4 @@
       </batchtest>
     </junit>
   </target>
-
 </project>

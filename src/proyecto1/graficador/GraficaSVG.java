@@ -2,9 +2,11 @@ package proyecto1.graficador;
 
 import java.util.*;
 
+/**
+* Clase que genera las Graficas en SVG.
+*/
 public class GraficaSVG{
 
-	private LinkedList<String> salida;
 	private LinkedList<Double> valoresY;
 	private double x1;
 	private double x2;
@@ -13,9 +15,21 @@ public class GraficaSVG{
 	private int ancho;
 	private int alto;
 	private double proporcionX;
-        private double proporcionY;
+    private double proporcionY;
 	private final static String[] colores = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
 
+    /**
+    * Metodo Constructor para generar la grafica SVG.
+    *@param ancho - ancho del canvas.
+    *@param alto - alto del canvas.
+    *@param proporcionX - La proporcion de pixeles por unidad.
+    *@param proporcionY - La proporcion de pixeles por unidad.
+    *@param x1 - Valores para los intervalos.
+    *@param x2 - Valores para los intervalos.
+    *@param y1 - Valores para los intervalos.
+    *@param y2 - Valores para los intervalos.
+    *@param valoresY - Lista de resultados de la evaluacion.
+    */
 	public GraficaSVG(int ancho, int alto,double proporcionX ,double proporcionY,double x1, double x2,double y1 , double y2, LinkedList<Double> valoresY){
 		this.x1 = x1;
 		this.x2 = x2;
@@ -26,13 +40,15 @@ public class GraficaSVG{
         this.proporcionY = proporcionY;
 		this.ancho = ancho;
 		this.alto = alto;
-		salida = new LinkedList<String>();
-        pintaGrafica();
 	}
 
-	public LinkedList<String> getSalida(){
-		return salida;
-	}
+    private String path(double x1, double x2){
+        return "M " + x1 + " " + x2 + " l 0 0 ";
+    }
+
+    private String pathEje(double x1, double y1, double x2, double y2){
+        return "M " + x1 + " " + y1 + " l " + x2 + " " + y2 + " ";
+    }
 
 	private String linea(double x1, double y1, double x2, double y2, String color){
 		return "<line x1='" + x1 + "' y1='" + y1 + "' x2='" + x2 + "' y2='" + y2 + "' stroke='" + color + "' stroke-width='3' />";
@@ -60,12 +76,18 @@ public class GraficaSVG{
     	return (int) (y*proporcionY);
     }
 
-    private void pintaGrafica(){
+    private double setProporcion(int altoAncho, double x1, double x2){
+        double prop = altoAncho/(x2-x1);
+        return prop;
+    }
+
+    public LinkedList<String> pintaGrafica(){
+        LinkedList<String> salida = new LinkedList<String>();
     	salida.add(dimensiones(alto,ancho));
-    	if(x1 < 0 && x2 > 0){
+    	if(x1 < 0 && x2 > 0){//eje y
     		salida.add(eje(coordenadaX(0),0,coordenadaX(0),alto));
     	}
-    	if(y1 < 0 && y2 > 0){
+    	if(y1 < 0 && y2 > 0){//eje x
     		salida.add(eje(0,coordenadaY(0),ancho,coordenadaY(0)));
     	}
     	double valX = 0;
@@ -74,7 +96,7 @@ public class GraficaSVG{
 				color += colores[(int)(Math.random()*colores.length)];
             double anterior = 0;
 		for(Double val: valoresY){
-            if(anterior == 0 || (val-anterior) != proporcionY){
+            if(anterior == 0 || (val-anterior) > proporcionY){
                 anterior = val;
                 continue;
             }
@@ -82,6 +104,31 @@ public class GraficaSVG{
     		valX++;
             anterior = val;
 		}
-	salida.add(cierraSvg());
+	    salida.add(cierraSvg());
+        return salida;
+    }
+
+    public LinkedList<String> graficaCanvas(){
+        LinkedList<String> salida1 = new LinkedList<String>();
+        if(x1 < 0 && x2 > 0){
+            salida1.add(pathEje(coordenadaX(0),0,0,alto));
+        }
+        if(y1 < 0 && y2 > 0){
+            salida1.add(pathEje(0,coordenadaY(0),ancho,0));
+        }
+        double valX = 0;
+        double anterior = 0;
+        int entrador = 0;
+        for(Double val1: valoresY){
+            if(anterior == 0 || (val1-anterior) > proporcionY){
+                anterior = val1;
+                continue;
+            }
+            System.out.println("entra " + entrador++);
+            salida1.add(pathEje(valX,coordenadaY(val1),1,coordenadaY(val1)-coordenadaY(anterior)));
+            valX++;
+            anterior = val1;
+        }
+        return salida1;
     }
 }

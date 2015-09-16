@@ -78,7 +78,6 @@
                   <Font name="Liberation Sans Narrow" size="12.0" />
                </font>
             </Label>
-            <Button layoutX="37.0" layoutY="429.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Limpia" />
          </children>
       </Pane>
       <TextArea fx:id="errorField" layoutX="39.0" layoutY="592.0" prefHeight="123.0" prefWidth="729.0" />

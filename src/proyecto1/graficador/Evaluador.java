@@ -10,7 +10,6 @@ public class Evaluador extends Analizador{
 
 	/**
 	* Constructor vacio.
-	* @param String s - La String que se analizara.
 	*/
 	public Evaluador(){
 		super();
@@ -18,9 +17,10 @@ public class Evaluador extends Analizador{
 
 	/**
 	* Metodo recursivo que evalua la expresion.
-	* @param aEvaluar Linkedlist de fichas, lista para evaluarse.
-        * @param x
-	* @return El resultado de la operacion.
+	* @param aEvaluar -  Linkedlist de fichas, lista para evaluarse.
+    * @param x - el valor que se evaluara.
+    * @param primera - para ver si se ejecutara por primera vez para una funcion o si se esta ejecutando como parte de otra.
+	* @return double - El resultado de la operacion.
 	*/
 	@SuppressWarnings("unchecked") public double evalua(LinkedList<Ficha> aEvaluar,double x,boolean primera){
 		double izq = 0;
@@ -30,7 +30,6 @@ public class Evaluador extends Analizador{
 		LinkedList<Ficha> aEvaluar1 = aEvaluar;
 		if(primera)
 			aEvaluar1 = (LinkedList<Ficha>)aEvaluar.clone();
-		//System.out.println("cosito ultima ficha" + aEvaluar1.peekLast().ficha);
 		if(aEvaluar1.peekLast().ficha == NUM) //caso Base 1
 			return Double.valueOf(aEvaluar1.removeLast().entrada);
 		if(aEvaluar1.peekLast().ficha == LETRA){ //caso base 2

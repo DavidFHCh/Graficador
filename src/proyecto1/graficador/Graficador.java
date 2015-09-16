@@ -28,7 +28,7 @@ public class Graficador extends Application {
     }
 
     /**
-     * @param args the command line arguments
+     * @param args de la la linea de comandos.
      */
     public static void main(String[] args) {
         launch(args);

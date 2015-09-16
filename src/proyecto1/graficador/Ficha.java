@@ -12,20 +12,26 @@ public class Ficha{
 
 	/**
 	* Constructor para generar fichas.
+	* @param ficha - identificador, precedencia.
+	* @param entrada - la ficha.
 	*/
 	public Ficha(int ficha, String	entrada){
 		this.ficha = ficha;
 		this.entrada = entrada;
 	}
 
+	/**
+	* Metodo que cambia la precedencia de la ficha.
+	* @param f - la nueva precendencia.
+	*/
 	public void setFicha(int f){
 		this.ficha = f;
 	}
 
-	public void setEntradaSigno(String novo){
-		this.entrada =  novo + this.entrada;
-	}
-
+	/**
+	* Metodo que ve si dos fichas son iguales.
+	* @param o - objeto con el que se comparara.
+	*/
 	@Override public boolean equals(Object o){
 		if(o instanceof Ficha){
 			Ficha f1 = (Ficha) o;

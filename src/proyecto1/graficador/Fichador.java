@@ -24,6 +24,11 @@ public class Fichador{
     public final Pattern regex;// Un objeto de tipo pattern.
     public final int ficha;
 
+    /**
+    * Constructor para tipos de Ficha.
+    * @param regex - la expresion regular que regira lo que sea este tipo de ficha.
+    * @param ficha - un identificador.
+    */
     public TipoFicha(Pattern regex, int ficha){
       this.regex = regex;
       this.ficha = ficha;
@@ -39,13 +44,17 @@ public class Fichador{
       agregaGramatica();
   }
 
+  /**
+  *Metodo que obtiene la lista de fichas.
+  *@return LinkedList - la lista de fichas.
+  */
   public LinkedList<Ficha> getFichas(){
     return this.fichas;
   }
 
     /**
      *  Separa la String de entrada en Fichas.
-     * @param la String de entrada.
+     * @param entrada - La String de entrada, funcion.
      */ 
     public void hazFichas(String entrada){
       String entradaCopia = new String(entrada.replaceAll("\\s+",""));
