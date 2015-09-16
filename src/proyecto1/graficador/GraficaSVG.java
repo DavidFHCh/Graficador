@@ -5,7 +5,7 @@ import java.util.*;
 public class GraficaSVG{
 
 	private LinkedList<String> salida;
-	private LinkedList<LinkedList<Double>> valoresY;
+	private LinkedList<Double> valoresY;
 	private double x1;
 	private double x2;
 	private double y1;
@@ -16,7 +16,7 @@ public class GraficaSVG{
     private double proporcionY;
 	private final static String[] colores = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
 
-	public GraficaSVG(int ancho, int alto,double proporcionX ,double proporcionY,double x1, double x2,double y1 , double y2, LinkedList<LinkedList<Double>> valoresY){
+	public GraficaSVG(int ancho, int alto,double proporcionX ,double proporcionY,double x1, double x2,double y1 , double y2, LinkedList<Double> valoresY){
 		this.x1 = x1;
 		this.x2 = x2;
 		this.y1 = y1;
@@ -68,22 +68,20 @@ public class GraficaSVG{
     	if(y1 < 0 && y2 > 0){
     		salida.add(eje(0,coordenadaY(0),ancho,coordenadaY(0)));
     	}
-    	for(LinkedList<Double> l :valoresY){
-    		double valX = 0;
-			String color = "#";
-				for(int j = 0; j < 6;j++)
-					color += colores[(int)(Math.random()*colores.length)];
-                double anterior = 0;
-    		for(Double val: l){
-                if(anterior == 0){
-                    anterior = val;
-                    continue;
-                }
-    			salida.add(linea(valX-1,coordenadaY(anterior),valX,coordenadaY(val),color));
-    			valX++;
+    	double valX = 0;
+		String color = "#";
+			for(int j = 0; j < 6;j++)
+				color += colores[(int)(Math.random()*colores.length)];
+            double anterior = 0;
+		for(Double val: valoresY){
+            if(anterior == 0){
                 anterior = val;
-    		}
-    	}
-    	salida.add(cierraSvg());
+                continue;
+            }
+    		salida.add(linea(valX-1,coordenadaY(anterior),valX,coordenadaY(val),color));
+    		valX++;
+            anterior = val;
+		}
+	salida.add(cierraSvg());
     }
 }

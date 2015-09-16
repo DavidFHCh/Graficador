@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.canvas.*?>
@@ -7,10 +8,8 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="388.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="base" opacity="0.71" prefHeight="388.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="y1text" layoutX="44.0" layoutY="171.0" prefHeight="25.0" prefWidth="71.0" />
       <Pane layoutX="8.0" layoutY="32.0">
          <children>
             <Label layoutX="6.0" layoutY="277.0" text="alto =">
@@ -57,20 +56,33 @@
       </Pane>
       <Pane layoutX="29.0" layoutY="22.0">
          <children>
-            <Button layoutX="504.0" layoutY="318.0" mnemonicParsing="false" text="SVG" />
-            <Button layoutY="318.0" mnemonicParsing="false" text="Graficar" />
+            <Button layoutX="504.0" layoutY="318.0" mnemonicParsing="false" text="SVG">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor></Button>
+            <Button layoutY="318.0" mnemonicParsing="false" text="Graficar" textAlignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor></Button>
             <TextField fx:id="funciontext" layoutX="118.0" layoutY="318.0" prefHeight="25.0" prefWidth="367.0" />
-            <Canvas fx:id="canvas" height="301.0" layoutX="117.0" opacity="0.0" width="444.0">
+            <Canvas fx:id="canvas" blendMode="SOFT_LIGHT" height="301.0" layoutX="117.0" opacity="0.63" width="444.0">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Canvas>
          </children>
       </Pane>
+      <TextField fx:id="y1text" layoutX="44.0" layoutY="171.0" prefHeight="25.0" prefWidth="71.0" />
       <TextField layoutX="45.0" layoutY="203.0" prefHeight="25.0" prefWidth="71.0" fx:id="x2text" />
       <TextField fx:id="y2text" layoutX="44.0" layoutY="238.0" prefHeight="25.0" prefWidth="71.0" />
       <TextField fx:id="anchotext" layoutX="44.0" layoutY="270.0" prefHeight="25.0" prefWidth="71.0" />
       <TextField layoutX="45.0" layoutY="138.0" prefHeight="25.0" prefWidth="71.0" fx:id="x1text" />
       <TextField fx:id="altotext" layoutX="44.0" layoutY="304.0" prefHeight="25.0" prefWidth="71.0" />
    </children>
+   <opaqueInsets>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </opaqueInsets>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
 </AnchorPane>
