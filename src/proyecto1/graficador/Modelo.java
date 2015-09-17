@@ -87,8 +87,6 @@ public class Modelo{
 		}catch(ArithmeticException ae){
 			continue;
 		}
-			if(val == Double.NaN)
-				continue;
 			resultados.add(val);
 			x0 += 1/proporcionX;
 		}

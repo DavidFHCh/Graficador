@@ -96,7 +96,7 @@ public class GraficaSVG{
 				color += colores[(int)(Math.random()*colores.length)];
             double anterior = 0;
 		for(Double val: valoresY){
-            if(anterior == 0 || (val-anterior) > proporcionY){
+            if(val == Double.NaN || (val < 0 && anterior > 0) || (val > 0 && anterior < 0)){
                 anterior = val;
                 continue;
             }
@@ -118,13 +118,11 @@ public class GraficaSVG{
         }
         double valX = 0;
         double anterior = 0;
-        int entrador = 0;
         for(Double val1: valoresY){
-            if(anterior == 0 || (val1-anterior) > proporcionY){
+            if(val1 == Double.NaN || (val1 < 0 && anterior > 0) || (val1 > 0 && anterior < 0)){
                 anterior = val1;
                 continue;
             }
-            System.out.println("entra " + entrador++);
             salida1.add(pathEje(valX,coordenadaY(val1),1,coordenadaY(val1)-coordenadaY(anterior)));
             valX++;
             anterior = val1;

@@ -34,11 +34,15 @@
             <TextField fx:id="y1text" layoutX="54.0" layoutY="202.0" prefHeight="25.0" prefWidth="71.0" />
             <ScrollPane layoutX="140.0" layoutY="20.0" prefHeight="469.0" prefViewportHeight="301.0" prefViewportWidth="444.0" prefWidth="640.0">
                <content>
-                  <Canvas fx:id="canvas" height="658.0" width="807.0">
-                     <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
-                     </cursor>
-                  </Canvas>
+                  <Group fx:id="canvases">
+                     <children>
+                        <Canvas fx:id="canvas1" height="658.0" width="807.0">
+                           <cursor>
+                              <Cursor fx:constant="OPEN_HAND" />
+                           </cursor>
+                        </Canvas>
+                     </children>
+                  </Group>
                </content>
             </ScrollPane>
             <TextField fx:id="funciontext" layoutX="177.0" layoutY="511.0" prefHeight="25.0" prefWidth="513.0" />
@@ -58,7 +62,7 @@
                   <Font name="Liberation Sans Narrow" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="botonSVG" layoutX="709.0" layoutY="511.0" mnemonicParsing="false" text="SVG">
+            <Button fx:id="botonSVG" layoutX="709.0" layoutY="511.0" mnemonicParsing="false" onAction="#handleBotonSVG" text="SVG">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
@@ -78,11 +82,11 @@
                   <Font name="Liberation Sans Narrow" size="12.0" />
                </font>
             </Label>
-            <Button layoutX="37.0" layoutY="429.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Limpia" />
+            <Button layoutX="37.0" layoutY="429.0" mnemonicParsing="false" onAction="#handleBotonLimpia" prefHeight="25.0" prefWidth="70.0" text="Limpia" />
          </children>
       </Pane>
       <TextArea fx:id="errorField" layoutX="39.0" layoutY="592.0" prefHeight="123.0" prefWidth="729.0" />
-      <Label layoutX="45.0" layoutY="560.0" prefHeight="25.0" prefWidth="123.0" text="Mensajes de Error:" />
+      <Label layoutX="45.0" layoutY="560.0" prefHeight="25.0" prefWidth="123.0" text="Mensajes:" />
    </children>
    <opaqueInsets>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
