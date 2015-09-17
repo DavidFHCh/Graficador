@@ -19,6 +19,7 @@ import javafx.scene.Group;
 /**
  *
  * @author davif
+ * Clase Controladora
  */
 public class VistaController implements Initializable {
     
@@ -178,6 +179,9 @@ public class VistaController implements Initializable {
         }
     }
     
+    /**
+    * Metodo que inicializa objetos desde que abre interfaz.
+    */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
             errorField.setEditable(false);

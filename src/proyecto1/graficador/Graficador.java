@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * Clase Principal.
  * @author davif
  */
 public class Graficador extends Application {

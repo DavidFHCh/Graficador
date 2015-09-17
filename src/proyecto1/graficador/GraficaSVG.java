@@ -81,6 +81,10 @@ public class GraficaSVG{
         return prop;
     }
 
+    /**
+    * Metodo que Crea codigo de una imagen svg.
+    * @return LinkedList con el codigo svg.
+    */
     public LinkedList<String> pintaGrafica(){
         LinkedList<String> salida = new LinkedList<String>();
     	salida.add(dimensiones(alto,ancho));
@@ -108,6 +112,10 @@ public class GraficaSVG{
         return salida;
     }
 
+    /**
+    * Metodo que crea codigo SVG para el canvas.
+    * @return LinkedList llena de numeros y letras para generar paths.
+    */
     public LinkedList<String> graficaCanvas(){
         LinkedList<String> salida1 = new LinkedList<String>();
         if(x1 < 0 && x2 > 0){
