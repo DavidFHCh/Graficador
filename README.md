@@ -8,5 +8,29 @@ Profesor Canek Peláez Valdés
 
 Alumno David Felipe Hernández Chiapa.
 
+Este es un graficador de Funciones del tipo
+f(x) = x+1
+
+Usa notacion infija.
+
+Solo soporta una variable.
+
+funciones especiales:
+
+sin(<expresion>)
+cos(<expresion>)
+tan(<expresion>)
+cot(<expresion>)
+sec(<expresion>)
+csc(<expresion>)
+sqrt(<expresion>)
+
+Comandos:
+
+Probar - $ant test
+Compilar - $ant
+Javadoc - $ant doc
+Ejecutar - $java -jar Graficador.jar
+limpiar - $ant clean
 
 
