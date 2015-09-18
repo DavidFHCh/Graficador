@@ -32,5 +32,9 @@ Compilar - $ant
 Javadoc - $ant doc
 Ejecutar - $java -jar Graficador.jar
 limpiar - $ant clean
+Correr y Compilar - $ant run 
+
+Si usas "ant run" y quieres limpiar los directorios usa "ant clean"
+Ya que run no se encarga de borrarlo.
 
 

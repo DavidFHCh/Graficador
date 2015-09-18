@@ -78,4 +78,7 @@
       </batchtest>
     </junit>
   </target>
+  <target name="run" depends="compile.Graficador,Graficador.jar" description="Corre el programa.">
+    <java jar="Graficador.jar" fork="true" />
+  </target>
 </project>
