@@ -23,7 +23,7 @@ public class Graficador extends Application {
         
         Scene scene = new Scene(root);
         
-
+        stage.setTitle("El Graficador");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
